@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorinterval="30" xmlns="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation=" ">
+    <Appenders>
+        <Console name="Console" target="SYSYTEM_OUT>">
+            <PatternLayout pattern="%d %highlight{%p} %style{%C{1.} [%t] %m}{bold,green}%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
