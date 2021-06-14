@@ -6,6 +6,7 @@ import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 
+import me.otus.habr.service.Driver;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -19,22 +20,16 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MyStepdefs {
     public static final Logger logger = LogManager.getLogger(MyStepdefs.class);
 
-
-    private final WebDriver driver;
+    private WebDriver driver;
 
     public MyStepdefs() {
-        BasicConfigurator.configure();
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
+        driver = Driver.getDriver();
     }
 
     @Given("I am on the main page")
@@ -61,7 +56,7 @@ public class MyStepdefs {
     @Then("I am on post page")
     public void iAmOnPostPage() {
         assertThat(driver.getTitle(), startsWith(postTitle));
-        assertThat (driver.getCurrentUrl(), startsWith("https://habr.com/ru/post/"));
+        assertThat (driver.getCurrentUrl(), anyOf(is(startsWith("https://habr.com/ru/post/")), is(startsWith("https://habr.com/ru/company"))));
     }
 
     @When("I search {string}")

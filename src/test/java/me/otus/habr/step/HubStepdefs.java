@@ -5,6 +5,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import me.otus.habr.service.Driver;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -19,15 +20,13 @@ import java.util.concurrent.TimeUnit;
 
 public class HubStepdefs {
     public static final Logger logger = LogManager.getLogger(HubStepdefs.class);
-    private final WebDriver driver;
+
+    private WebDriver driver;
+
     String hubName;
 
     public HubStepdefs() {
-        BasicConfigurator.configure();
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
+        driver = Driver.getDriver();
     }
 
     @Given("I am on hub page")
