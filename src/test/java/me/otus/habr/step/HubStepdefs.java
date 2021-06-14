@@ -2,6 +2,7 @@ package me.otus.habr.step;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.BasicConfigurator;
@@ -53,4 +54,6 @@ public class HubStepdefs {
     @And("each post has hub lable {string}")
     public void eachPostHasHubLable(String arg0) {
     }
+
+
 }

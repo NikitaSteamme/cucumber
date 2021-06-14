@@ -10,6 +10,7 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,6 +19,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -60,5 +62,17 @@ public class MyStepdefs {
     public void iAmOnPostPage() {
         assertThat(driver.getTitle(), startsWith(postTitle));
         assertThat (driver.getCurrentUrl(), startsWith("https://habr.com/ru/post/"));
+    }
+
+    @When("I search {string}")
+    public void iSearch(String searchTerm) {
+        driver.findElement(By.xpath("//button[@id='search-form-btn']")).click();
+        driver.findElement(By.xpath("//input[@id='search-form-field']")).sendKeys(searchTerm, Keys.ENTER);
+    }
+
+    @Then("I am on result page with {string}")
+    public void iAmOnResultPageWith(String searchTerm) {
+        assertThat(driver.getTitle(), containsString(searchTerm));
+        assertThat(driver.getCurrentUrl(), startsWith("https://habr.com/ru/search/?q=" + searchTerm));
     }
 }
